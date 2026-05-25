@@ -24,26 +24,26 @@ public class ContaCorrente extends ContaBancaria {
     @Override
     public void movimenta(Operacao op){
         if (op.getTipo() == 'D') { //depósito  
-        saldo += op.getValor();
+        setSaldo(getSaldo() + op.getValor());
 
         // registra depósito
-        depositos.registrarMovimentacao(op.getValor());
+        getDepositos().registrarMovimentacao(op.getValor());
 
-        System.out.printf("Depósito realizado! Novo saldo: R$ %.2f\n", saldo);
+        System.out.printf("Depósito realizado! Novo saldo: R$%.2f\n", getSaldo());
 
-        if (saldo > saldoMax) {
-            saldoMax = saldo;
+        if (getSaldo() > getSaldoMax()) {
+            setSaldoMax(getSaldo());
         }
         
-    } else if (op.getTipo() == 'S') {//saque
+        } else if (op.getTipo() == 'S') {//saque
 
         // verificar saldo
-        if (op.getValor() >  (saldo + limiteCredito)) {
+        if (op.getValor() >  (getSaldo() + limiteCredito)) {
             System.out.println("Saldo insuficiente!");
             return;
         }
 
-        int[] notas = {100, 50, 20, 10, 5, 2};
+        double[] notas = {100.0, 50.0, 20.0, 10.0, 5.0, 2.0};
         int[] qtdNotas = new int[notas.length];
 
         double restante = op.getValor();
@@ -63,21 +63,21 @@ public class ContaCorrente extends ContaBancaria {
         System.out.println("\nNotas entregues:");
         for (int i = 0; i < notas.length; i++) {
             if (qtdNotas[i] > 0) {
-                System.out.println(qtdNotas[i] + " nota(s) de R$" + notas[i]);
+                System.out.printf(qtdNotas[i] + " nota(s) de R$%.2f\n", notas[i]);
             }
         }
 
         // atualizar saldo
-        saldo -= op.getValor();
+        setSaldo(getSaldo() - op.getValor());
 
         // registrar saque
-        saques.registrarMovimentacao(op.getValor());
+        getSaques().registrarMovimentacao(op.getValor());
         
-        if (saldo < saldoMin) {
-            saldoMin = saldo;
+        if (getSaldo() < getSaldoMin()) {
+            setSaldoMin(getSaldo());
         }
 
-        System.out.printf("Saque realizado! Novo saldo: R$ %.2f\n", saldo);
+        System.out.printf("Saque realizado! Novo saldo: R$%.2f\n", getSaldo());
         }
 
     }

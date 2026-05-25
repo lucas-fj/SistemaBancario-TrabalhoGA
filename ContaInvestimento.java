@@ -23,24 +23,24 @@ public class ContaInvestimento extends ContaBancaria {
     @Override
      public void movimenta(Operacao op){
         if (op.getTipo() == 'D') { //depósito
-            saldo += op.getValor();
-            depositos.registrarMovimentacao(op.getValor());
+            setSaldo(getSaldo() + op.getValor());;
+            getDepositos().registrarMovimentacao(op.getValor());
 
-            if (saldo > saldoMax) {
-                saldoMax = saldo;
+            if (getSaldo() > getSaldoMax()) {
+                setSaldoMax(getSaldo());
             }
-            System.out.printf("Depósito realizado! Novo saldo: R$ %.2f\n", saldo);
+            System.out.printf("Depósito realizado! Novo saldo: R$%.2f\n", getSaldo());
 
         }   else if(op.getTipo() == 'J'){ //juros
             double juros2 = getSaldo() * (op.getValor() / 100);
             op.setValor(juros2);
             setSaldo(getSaldo() + op.getValor());
-            juros.registrarMovimentacao(op.getValor());
+            getJuros().registrarMovimentacao(op.getValor());
 
-            if (saldo > saldoMax) {
-                saldoMax = saldo;
+            if (getSaldo() > getSaldoMax()) {
+                setSaldoMax(getSaldo());
             }
-            System.out.printf("Juros aplicado! Novo saldo: R$%.2f\n", saldo);
+            System.out.printf("Juros aplicado! Novo saldo: R$%.2f\n", getSaldo());
         }
     }
 }

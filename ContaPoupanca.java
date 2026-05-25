@@ -26,23 +26,23 @@ public class ContaPoupanca extends ContaBancaria{
     @Override
     public void movimenta(Operacao op){
          if (op.getTipo() == 'D') { //depósito 
-            saldo += op.getValor();
-            depositos.registrarMovimentacao(op.getValor());
-            System.out.printf("Depósito realizado! Novo saldo: R$ %.2f\n", saldo);
+            setSaldo(getSaldo() + op.getValor());
+            getDepositos().registrarMovimentacao(op.getValor());
+            System.out.printf("Depósito realizado! Novo saldo: R$%.2f\n", getSaldo());
 
-            if (saldo > saldoMax) {
-                saldoMax = saldo;
+            if (getSaldo() > getSaldoMax()) {
+                setSaldoMax(getSaldo());
             }
             
         } else if (op.getTipo() == 'S') {//saque
 
         // verificar saldo
-        if (op.getValor() > saldo) {
+        if (op.getValor() > getSaldo()) {
             System.out.println("Saldo insuficiente!");
             return;
         }
 
-        int[] notas = {100, 50, 20, 10, 5, 2};
+        double[] notas = {100.0, 50.0, 20.0, 10.0, 5.0, 2.0};
         int[] qtdNotas = new int[notas.length];
 
         double restante = op.getValor();
@@ -62,33 +62,33 @@ public class ContaPoupanca extends ContaBancaria{
         System.out.println("\nNotas entregues:");
         for (int i = 0; i < notas.length; i++) {
             if (qtdNotas[i] > 0) {
-                System.out.println(qtdNotas[i] + " nota(s) de R$" + notas[i]);
+                System.out.printf(qtdNotas[i] + " nota(s) de R$%.2f\n", notas[i]);
             }
         }
 
             // atualizar saldo
-            saldo -= op.getValor();
+            setSaldo(getSaldo() - op.getValor());
 
             // registrar saque
-            saques.registrarMovimentacao(op.getValor());
+            getSaques().registrarMovimentacao(op.getValor());
 
-            System.out.printf("Saque realizado! Novo saldo: R$ %.2f\n", saldo);
+            System.out.printf("Saque realizado! Novo saldo: R$%.2f\n", getSaldo());
 
-            if (saldo < saldoMin) {
-                saldoMin = saldo;
+            if (getSaldo() < getSaldoMin()) {
+                setSaldoMin(getSaldo());;
             }
 
         } else if(op.getTipo() == 'J'){ //juros
             double juros2 = getSaldo() * (op.getValor() / 100);
             op.setValor(juros2);
             setSaldo(getSaldo() + op.getValor());
-            juros.registrarMovimentacao(op.getValor());
+            getJuros().registrarMovimentacao(op.getValor());
 
-            if (saldo > saldoMax) {
-                saldoMax = saldo;
+            if (getSaldo() > getSaldoMax()) {
+                setSaldoMax(getSaldo());;
             }
 
-            System.out.println("Juros aplicado! Novo saldo: R$" + saldo);
+            System.out.printf("Juros aplicado! Novo saldo: R$%.2f\n", getSaldo());
         }
     }
 }

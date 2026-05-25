@@ -85,7 +85,7 @@ public class Main {
                     }
 
                     double valorDep = Teclado.leDouble("Informe o valor do depósito: ");
-                    while (valorDep < 0 ) {
+                    while (valorDep <= 0 ) {
                         valorDep = Teclado.leDouble("Valor inválido. Digite o valor novamente: ");
                     }
 

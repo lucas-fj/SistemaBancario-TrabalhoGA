@@ -4,14 +4,14 @@
 public  abstract class ContaBancaria {
     
     //atributos 
-    Cliente cliente;
-    double saldoInicial;
-    double saldo;
-    Movimentacao depositos;
-    Movimentacao saques;
-    Movimentacao juros;
-    double saldoMin;
-    double saldoMax;
+    private Cliente cliente;
+    private double saldoInicial;
+    private double saldo;
+    private Movimentacao depositos;
+    private Movimentacao saques;
+    private Movimentacao juros;
+    private double saldoMin;
+    private double saldoMax;
 
     //getters e setters
     public Cliente getCliente() {
@@ -50,7 +50,19 @@ public  abstract class ContaBancaria {
     public void setJuros(Movimentacao juros) {
         this.juros = juros;
     }
-   
+    public double getSaldoMin() {
+        return saldoMin;
+    }
+    public void setSaldoMin(double saldoMin) {
+        this.saldoMin = saldoMin;
+    }
+    public double getSaldoMax() {
+        return saldoMax;
+    }
+    public void setSaldoMax(double saldoMax) {
+        this.saldoMax = saldoMax;
+    }
+    
     //construtor 
     public ContaBancaria(Cliente cliente, double saldoInicial) {
         this.cliente = cliente;
@@ -77,10 +89,10 @@ public  abstract class ContaBancaria {
         System.out.println("Saldo atual: R$" + saldo);
 
         //movimentações
-        System.out.println("Depósitos: " + depositos.getQuantidade() + " || " + "Total: R$" + depositos.getValorTotal());
-        System.out.println("Saques: " + saques.getQuantidade() + " || " + "Total: R$" + saques.getValorTotal());
-        System.out.println("Juros: " + juros.getQuantidade() + " || " + "Total: R$" + juros.getValorTotal());
-        System.out.println("Saldo minimo: R$" + saldoMin);
-        System.out.println("Saldo máximo: R$" + saldoMax);
+        System.out.printf("Depósitos: " + depositos.getQuantidade() + " || " + "Total: R$%.2f\n", depositos.getValorTotal());
+        System.out.printf("Saques: " + saques.getQuantidade() + " || " + "Total: R$%.2f\n", saques.getValorTotal());
+        System.out.printf("Juros: " + juros.getQuantidade() + " || " + "Total: R$%.2f\n", juros.getValorTotal());
+        System.out.printf("Saldo minimo: R$%.2f\n", saldoMin);
+        System.out.printf("Saldo máximo: R$%.2f\n", saldoMax);
     }
 }

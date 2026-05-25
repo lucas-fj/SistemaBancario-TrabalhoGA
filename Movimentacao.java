@@ -27,8 +27,6 @@ public class Movimentacao {
         this.valorTotal = valorTotal;
     }
 
-
-     //métodos
      //método para registrar quantidade de depósitos
      public void registrarMovimentacao(double valor){
         quantidade++;
